@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>𝑿𝒁𝑨 𝑯𝑶𝑺𝑻 - Login</title>
+  <style>
+    body {
+      background: linear-gradient(135deg, #00008B 0%, #191970 50%, #000080 100%);
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      animation: fadeIn 1.5s ease-in;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    /* تأثيرات الخلفية */
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        radial-gradient(circle at 20% 80%, rgba(100, 100, 255, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(50, 50, 255, 0.2) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(150, 150, 255, 0.15) 0%, transparent 50%);
+      z-index: -1;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    
+    .login-box {
+      background-color: rgba(0, 0, 40, 0.7);
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 0 30px rgba(0, 0, 255, 0.4);
+      text-align: center;
+      width: 320px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(65, 105, 225, 0.3);
+      position: relative;
+      overflow: hidden;
+      animation: slideUp 0.8s ease-out;
+    }
+    
+    /* تأثير دخاني للخلفية */
+    .login-box::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(65, 105, 225, 0.1) 0%, transparent 70%);
+      animation: rotate 20s linear infinite;
+      z-index: -1;
+    }
+    
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes rotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    
+    .logo {
+      font-size: 28px;
+      font-weight: bold;
+      background: linear-gradient(to right, #FFD700, #FFA500);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 10px;
+      text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+      animation: glow 2s infinite alternate;
+    }
+    
+    @keyframes glow {
+      from { text-shadow: 0 0 5px rgba(255, 215, 0, 0.3); }
+      to { text-shadow: 0 0 15px rgba(255, 215, 0, 0.7), 0 0 20px rgba(255, 140, 0, 0.5); }
+    }
+    
+    .welcome-message {
+      font-size: 16px;
+      color: #FFD700;
+      margin-bottom: 20px;
+      text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    }
+    
+    input[type="password"] {
+      padding: 12px;
+      width: 100%;
+      border: none;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      font-size: 16px;
+      text-align: center;
+      transition: 0.3s;
+      background: rgba(0, 0, 70, 0.8);
+      color: #FFD700;
+      border: 1px solid #2A2AA5;
+      box-sizing: border-box;
+    }
+    
+    input[type="password"]:focus {
+      outline: none;
+      box-shadow: 0 0 10px #4169E1;
+      border-color: #4169E1;
+      transform: scale(1.02);
+    }
+    
+    input[type="checkbox"] {
+      accent-color: #4169E1;
+    }
+    
+    .remember {
+      margin-top: 10px;
+      font-size: 14px;
+      color: #FFD700;
+      text-align: right;
+    }
+    
+    button {
+      padding: 12px 35px;
+      font-size: 16px;
+      border: none;
+      background: linear-gradient(45deg, #4169E1, #1E90FF);
+      color: #fff;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+      font-weight: bold;
+      box-shadow: 0 5px 15px rgba(65, 105, 225, 0.4);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: 0.5s;
+    }
+    
+    button:hover::before {
+      left: 100%;
+    }
+    
+    button:hover {
+      background: linear-gradient(45deg, #1E90FF, #4169E1);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(65, 105, 225, 0.6);
+    }
+    
+    .forgot {
+      margin-top: 15px;
+      font-size: 13px;
+    }
+    
+    .forgot a {
+      color: #FFD700;
+      text-decoration: none;
+      transition: 0.3s;
+      position: relative;
+    }
+    
+    .forgot a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      right: 0;
+      width: 0;
+      height: 1px;
+      background: #FF8C00;
+      transition: width 0.3s ease;
+    }
+    
+    .forgot a:hover::after {
+      width: 100%;
+    }
+    
+    .forgot a:hover {
+      color: #FFA500;
+      text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+    }
+    
+    .security-note {
+      margin-top: 15px;
+      font-size: 13px;
+      color: #FFB6C1;
+      text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    }
+    
+    /* جزيئات متحركة في الخلفية */
+    .particles {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      overflow: hidden;
+    }
+    
+    .particle {
+      position: absolute;
+      background: rgba(255, 215, 0, 0.4);
+      border-radius: 50%;
+      animation: floatParticle 15s infinite linear;
+    }
+    
+    @keyframes floatParticle {
+      0% {
+        transform: translateY(100vh) translateX(0);
+      }
+      100% {
+        transform: translateY(-100px) translateX(20px);
+      }
+    }
+    
+    /* نجوم متلألئة */
+    .stars {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+    
+    .star {
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+      animation: twinkle 3s infinite alternate;
+    }
+    
+    @keyframes twinkle {
+      0% { opacity: 0.2; }
+      100% { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <!-- جزيئات الخلفية المتحركة -->
+  <div class="particles" id="particles"></div>
+  
+  <!-- النجوم المتلألئة -->
+  <div class="stars" id="stars"></div>
+  
+  <div class="login-box">
+    <div class="logo">𝑿𝒁𝑨 𝑳𝑶𝑮𝑰𝑵</div>
+    <div class="welcome-message">مرحباً بك، الرجاء إدخال كلمة المرور للمتابعة</div>
+    <form method="POST">
+      <input type="password" name="password" placeholder="كلمة المرور" required />
+      <br>
+      <div class="remember">
+        <input type="checkbox" name="remember" id="remember" /> <label for="remember">حفظ كلمة المرور</label>
+      </div>
+      <br>
+      <button type="submit">دخول</button>
+    </form>
+    <div class="forgot">
+      <a href="https://t.me/@𝑿_𝒁_𝑨_𝑿𝒙" target="_blank">نسيت كلمة المرور؟</a>
+    </div>
+    <div class="security-note">هذا النظام محمي. الدخول مسموح فقط للمصرح لهم.</div>
+  </div>
+
+  <script>
+    // إنشاء جزيئات متحركة في الخلفية
+    document.addEventListener('DOMContentLoaded', function() {
+      const particlesContainer = document.getElementById('particles');
+      const starsContainer = document.getElementById('stars');
+      const particleCount = 15;
+      const starCount = 50;
+      
+      // إنشاء الجزيئات
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.classList.add('particle');
+        
+        // خصائص عشوائية للجزيئات
+        const size = Math.random() * 8 + 4;
+        const left = Math.random() * 100;
+        const animationDuration = Math.random() * 20 + 10;
+        const animationDelay = Math.random() * 5;
+        
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        particle.style.left = `${left}vw`;
+        particle.style.animationDuration = `${animationDuration}s`;
+        particle.style.animationDelay = `${animationDelay}s`;
+        
+        particlesContainer.appendChild(particle);
+      }
+      
+      // إنشاء النجوم
+      for (let i = 0; i < starCount; i++) {
+        const star = document.createElement('div');
+        star.classList.add('star');
+        
+        // خصائص عشوائية للنجوم
+        const size = Math.random() * 3;
+        const left = Math.random() * 100;
+        const top = Math.random() * 100;
+        const animationDuration = Math.random() * 3 + 1;
+        const animationDelay = Math.random() * 5;
+        
+        star.style.width = `${size}px`;
+        star.style.height = `${size}px`;
+        star.style.left = `${left}vw`;
+        star.style.top = `${top}vh`;
+        star.style.animationDuration = `${animationDuration}s`;
+        star.style.animationDelay = `${animationDelay}s`;
+        
+        starsContainer.appendChild(star);
+      }
+    });
+  </script>
+</body>
+</html>

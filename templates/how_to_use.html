@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>كيفية استخدام الموقع</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: url('/static/background.jpg') no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+            color: white;
+            animation: bgColor 10s infinite alternate;
+        }
+
+        @keyframes bgColor {
+            0% {background-color: rgba(0,0,0,0.6);}
+            100% {background-color: rgba(0,0,0,0.8);}
+        }
+
+        .container {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 900px;
+            margin: 60px auto;
+            box-shadow: 0 0 20px rgba(255,255,255,0.3);
+            animation: fadeIn 2s ease-in;
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 30px;
+            margin-bottom: 25px;
+            animation: textSlide 3s infinite alternate;
+        }
+
+        @keyframes textSlide {
+            0% {letter-spacing: 1px; color: #ffffff;}
+            100% {letter-spacing: 5px; color: #2ecc71;}
+        }
+
+        ul {
+            list-style-type: decimal;
+            padding-right: 25px;
+            font-size: 18px;
+            line-height: 1.8;
+        }
+
+        li {
+            animation: fadeInUp 0.5s ease-in-out forwards;
+        }
+
+        @keyframes fadeInUp {
+            from {opacity: 0; transform: translateY(20px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+
+        button {
+            display: block;
+            margin: 30px auto 0;
+            padding: 15px 45px;
+            font-size: 20px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            color: white;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        button:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>طريقة استخدام موقع استضافة سكربتات Python</h2>
+        <ul>
+            <li>أدخل كلمة المرور للدخول للموقع.</li>
+            <li>بعد الدخول، سيتم تحويلك لهذه الصفحة.</li>
+            <li>اقرأ التعليمات بعناية لتفهم طريقة الاستعمال.</li>
+            <li>اضغط على زر "نعم" للمتابعة إلى صفحة الرفع.</li>
+            <li>في صفحة الرفع، يمكنك اختيار سكربت Python من جهازك.</li>
+            <li>اضغط على زر رفع ليتم رفع السكربت للسيرفر.</li>
+            <li>ستتمكن من تشغيل السكربت من لوحة التحكم.</li>
+            <li>كل سكربت يتم حفظه في مجلد مخصص.</li>
+            <li>تستطيع تثبيت مكتبات إضافية عبر لوحة التحكم.</li>
+            <li>يوجد زر لفحص سرعة السيرفر.</li>
+            <li>السكربتات تشتغل في الخلفية تلقائيًا.</li>
+            <li>واجهة الاستخدام بسيطة وسهلة للمطورين.</li>
+            <li>البيانات محفوظة بأمان داخل السيرفر.</li>
+            <li>تأكد من امتداد السكربت .py فقط.</li>
+            <li>الموقع يدعم ملفات صغيرة ومتوسطة الحجم حالياً.</li>
+        </ul>
+        <form method="POST">
+            <button type="submit">نعم، أريد المتابعة</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>File Manager</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #00008B 0%, #191970 50%, #000080 100%);
+            color: #fff;
+            font-family: 'Segoe UI', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 50px 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* تأثيرات الخلفية */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(100, 100, 255, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(50, 50, 255, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(150, 150, 255, 0.1) 0%, transparent 50%);
+            z-index: -1;
+        }
+
+        h2 {
+            font-size: 3rem;
+            background: linear-gradient(to right, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: fadeInDown 1s ease-in-out;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+        }
+
+        form {
+            background: rgba(0, 0, 50, 0.7);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px #4169E155;
+            margin-top: 30px;
+            animation: fadeInUp 1s ease-in-out;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(65, 105, 225, 0.3);
+        }
+
+        input[type="file"], input[type="text"] {
+            background: rgba(0, 0, 70, 0.8);
+            border: 1px solid #2A2AA5;
+            color: #FFD700;
+            padding: 10px;
+            border-radius: 8px;
+            margin-right: 10px;
+            transition: 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        input[type="file"]:focus, input[type="text"]:focus {
+            outline: none;
+            border-color: #4169E1;
+            box-shadow: 0 0 8px #4169E1;
+        }
+
+        button {
+            background: linear-gradient(45deg, #4169E1, #1E90FF);
+            color: #fff;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 5px 15px #4169E144;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+
+        button:hover::before {
+            left: 100%;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px #4169E188;
+        }
+
+        h3 {
+            margin-top: 50px;
+            font-size: 1.8rem;
+            color: #FFD700;
+            animation: fadeInUp 1.2s ease-in-out;
+            text-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 20px;
+            animation: fadeIn 1.4s ease-in-out;
+        }
+
+        li {
+            margin: 12px 0;
+            background: rgba(0, 0, 70, 0.7);
+            padding: 10px 20px;
+            border-radius: 10px;
+            transition: transform 0.3s ease, background 0.3s ease;
+            border-left: 3px solid #4169E1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        li:hover {
+            transform: scale(1.02);
+            background: rgba(0, 0, 90, 0.8);
+            box-shadow: 0 5px 15px rgba(65, 105, 225, 0.3);
+        }
+
+        .file-name {
+            flex-grow: 1;
+            color: #FFD700;
+            font-weight: bold;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-run {
+            background: linear-gradient(45deg, #32CD32, #228B22);
+            padding: 8px 15px;
+            font-size: 0.9rem;
+        }
+
+        .btn-stop {
+            background: linear-gradient(45deg, #DC143C, #B22222);
+            padding: 8px 15px;
+            font-size: 0.9rem;
+        }
+
+        .btn-run:hover {
+            background: linear-gradient(45deg, #228B22, #32CD32);
+            box-shadow: 0 5px 20px rgba(50, 205, 50, 0.6);
+        }
+
+        .btn-stop:hover {
+            background: linear-gradient(45deg, #B22222, #DC143C);
+            box-shadow: 0 5px 20px rgba(220, 20, 60, 0.6);
+        }
+
+        a {
+            color: #FFD700;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #FF8C00;
+            transition: width 0.3s ease;
+        }
+
+        a:hover::after {
+            width: 100%;
+        }
+
+        a:hover {
+            color: #FFA500;
+            text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+        }
+
+        .link-container {
+            margin-top: 40px;
+            animation: fadeIn 1.6s ease-in-out;
+        }
+
+        .message {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            background-color: rgba(0, 0, 70, 0.8);
+            color: #FFD700;
+            border-left: 4px solid #4169E1;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* تأثيرات إضافية */
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0% { transform: translate(0, 0px); }
+            50% { transform: translate(0, -10px); }
+            100% { transform: translate(0, 0px); }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* جزيئات متحركة في الخلفية */
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255, 215, 0, 0.3);
+            border-radius: 50%;
+            animation: floatParticle 15s infinite linear;
+        }
+
+        @keyframes floatParticle {
+            0% {
+                transform: translateY(100vh) translateX(0);
+            }
+            100% {
+                transform: translateY(-100px) translateX(20px);
+            }
+        }
+
+        /* حالة التشغيل */
+        .running {
+            border-left: 3px solid #32CD32;
+            background: rgba(0, 50, 0, 0.7) !important;
+        }
+
+        .running .file-name::after {
+            content: " ● Running";
+            color: #32CD32;
+            font-size: 0.8rem;
+            margin-left: 10px;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 0.3; }
+            100% { opacity: 1; }
+        }
+
+        .status-indicator {
+            font-size: 0.8rem;
+            padding: 2px 8px;
+            border-radius: 10px;
+            margin-left: 10px;
+        }
+
+        .status-running {
+            background: #32CD32;
+            color: white;
+        }
+
+        .status-stopped {
+            background: #DC143C;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- جزيئات الخلفية المتحركة -->
+    <div class="particles" id="particles"></div>
+
+    <h2 class="floating">File Dashboard</h2>
+
+    <!-- نموذج تحميل مكتبة خارجية -->
+    <form method="POST">
+        <label for="package_name">Enter Library Name:</label>
+        <input type="text" id="package_name" name="package_name" required>
+        <button type="submit">Install</button>
+    </form>
+
+    {% if message %}
+        <div class="message">
+            <p>{{ message }}</p>
+        </div>
+    {% endif %}
+
+    <form action="/upload" method="POST" enctype="multipart/form-data">
+        <input type="file" name="file"/>
+        <button type="submit">Upload</button>
+    </form>
+
+    <h3>Uploaded Scripts:</h3>
+    <ul>
+        {% for file in files %}
+            <li id="file-{{ file|replace('.', '-') }}" {% if script_statuses[file] %}class="running"{% endif %}>
+                <span class="file-name">
+                    {{ file }}
+                    {% if script_statuses[file] %}
+                        <span class="status-indicator status-running">Running</span>
+                    {% else %}
+                        <span class="status-indicator status-stopped">Stopped</span>
+                    {% endif %}
+                </span>
+                <div class="action-buttons">
+                    <button class="btn-run" onclick="runScript('{{ file }}')">Run</button>
+                    <button class="btn-stop" onclick="stopScript('{{ file }}')">Stop</button>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <div class="link-container">
+        <a href="/speed">Run Speed Test</a>
+    </div>
+
+    <script>
+        // إنشاء جزيئات متحركة في الخلفية
+        document.addEventListener('DOMContentLoaded', function() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 20;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // خصائص عشوائية للجزيئات
+                const size = Math.random() * 10 + 5;
+                const left = Math.random() * 100;
+                const animationDuration = Math.random() * 20 + 10;
+                const animationDelay = Math.random() * 5;
+                
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${left}vw`;
+                particle.style.animationDuration = `${animationDuration}s`;
+                particle.style.animationDelay = `${animationDelay}s`;
+                
+                particlesContainer.appendChild(particle);
+            }
+        });
+
+        // دالة تشغيل السكربت
+        function runScript(filename) {
+            const fileElement = document.getElementById(`file-${filename.replace('.', '-')}`);
+            
+            fetch(`/run/${filename}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'running') {
+                        fileElement.classList.add('running');
+                        updateStatusIndicator(filename, 'running');
+                        showMessage(`Script ${filename} is now running`, 'success');
+                    } else {
+                        showMessage(`Error: ${data.message}`, 'error');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error running script:', error);
+                    showMessage('Error running script', 'error');
+                });
+        }
+
+        // دالة إيقاف السكربت
+        function stopScript(filename) {
+            const fileElement = document.getElementById(`file-${filename.replace('.', '-')}`);
+            
+            fetch(`/stop/${filename}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'stopped') {
+                        fileElement.classList.remove('running');
+                        updateStatusIndicator(filename, 'stopped');
+                        showMessage(`Script ${filename} has been stopped`, 'success');
+                    } else {
+                        showMessage(`Error: ${data.message}`, 'error');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error stopping script:', error);
+                    showMessage('Error stopping script', 'error');
+                });
+        }
+
+        // تحديث مؤشر الحالة
+        function updateStatusIndicator(filename, status) {
+            const fileElement = document.getElementById(`file-${filename.replace('.', '-')}`);
+            const statusElement = fileElement.querySelector('.status-indicator');
+            
+            if (status === 'running') {
+                statusElement.textContent = 'Running';
+                statusElement.className = 'status-indicator status-running';
+            } else {
+                statusElement.textContent = 'Stopped';
+                statusElement.className = 'status-indicator status-stopped';
+            }
+        }
+
+        // عرض الرسائل
+        function showMessage(message, type) {
+            // إزالة أي رسالة سابقة
+            const existingMessage = document.querySelector('.temp-message');
+            if (existingMessage) {
+                existingMessage.remove();
+            }
+
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message temp-message`;
+            messageDiv.style.backgroundColor = type === 'success' ? 'rgba(0, 70, 0, 0.8)' : 'rgba(70, 0, 0, 0.8)';
+            messageDiv.style.borderLeftColor = type === 'success' ? '#32CD32' : '#DC143C';
+            messageDiv.innerHTML = `<p>${message}</p>`;
+            
+            document.querySelector('h2').after(messageDiv);
+            
+            // إزالة الرسالة تلقائياً بعد 3 ثواني
+            setTimeout(() => {
+                if (messageDiv.parentNode) {
+                    messageDiv.remove();
+                }
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
